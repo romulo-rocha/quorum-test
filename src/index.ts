@@ -9,19 +9,15 @@ import VoteService from "./services/vote.service";
 const init = async () => {
   try {
     const personService = new PersonService();
-    console.log("Loading legistators.csv file");
     await personService.loadPersonsFromCSVFile();
 
     const billService = new BillService();
-    console.log("Loading bills.csv file");
     await billService.loadBillsFromCSVFile();
 
     const voteService = new VoteService();
-    console.log("Loading votes.csv file");
     await voteService.loadVotesFromCSVFile();
 
     const voteResultService = new VoteResultService();
-    console.log("Loading vote_results.csv file");
     await voteResultService.loadVoteResultsFromCSVFile();
 
     const legislatorSupportOppesedCountList =
@@ -29,7 +25,6 @@ const init = async () => {
         voteResultService.voteResults
       );
 
-    console.log("Generating files");
     await CSVWriter.createObjectCsvWriter({
       path: path.resolve(
         __dirname,
@@ -46,6 +41,24 @@ const init = async () => {
     console.info(
       "legislators-support-oppose-count.csv file has been generated. Check folder /output"
     );
+
+    const supporterOpposerCountList = billService.getSupporterOpposerCountList(
+      voteService.votes,
+      voteResultService.voteResults,
+      personService.persons
+    );
+    await CSVWriter.createObjectCsvWriter({
+      path: path.resolve(__dirname, "../output/bills.csv"),
+      header: [
+        { id: "id", title: "id" },
+        { id: "title", title: "title" },
+        { id: "supporterCount", title: "supporter_count" },
+        { id: "opposerCount", title: "opposer_count" },
+        { id: "primarySponsor", title: "primary_sponsor" },
+      ],
+    }).writeRecords(supporterOpposerCountList);
+
+    console.info("bills.csv file has been generated. Check folder /output");
   } catch (err) {
     console.error("Error during execution of process", err);
   } finally {

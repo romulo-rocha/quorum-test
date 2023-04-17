@@ -3,11 +3,39 @@ import * as path from "path";
 
 import Bill from "../core/models/Bill";
 import { parse } from "csv-parse";
+import Vote from "../core/models/Vote";
+import VoteResult from "../core/models/VoteResult";
+import Person from "../core/models/Person";
+
+interface SupporterOpposerCount {
+  id: number;
+  title: string;
+  supporterCount: number;
+  opposerCount: number;
+  primarySponsor: string;
+}
 
 export default class BillService {
   bills: Bill[] = [];
 
   constructor() {}
+
+  getSupporterOpposerCountList(
+    votes: Vote[],
+    voteResults: VoteResult[],
+    persons: Person[]
+  ): SupporterOpposerCount[] {
+    return this.bills.map(
+      (bill) =>
+        <SupporterOpposerCount>{
+          id: bill.id,
+          title: bill.title,
+          supporterCount: bill.getSupporterCount(votes, voteResults),
+          opposerCount: bill.getOpposerCount(votes, voteResults),
+          primarySponsor: bill.getPrimarySponsor(persons)?.name || "Unknown",
+        }
+    );
+  }
 
   async loadBillsFromCSVFile(): Promise<any[]> {
     const csvFilePath = path.resolve(__dirname, "../../data/bills.csv");
