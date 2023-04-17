@@ -3,7 +3,7 @@ export default class Bill {
   public title: string;
   public sponsorId: number;
 
-  constructor(id: number, title: string, sponsorId: number) {
+  constructor(id: number | undefined, title: string, sponsorId: number) {
     this.id = id || undefined;
     this.title = title;
     this.sponsorId = sponsorId;

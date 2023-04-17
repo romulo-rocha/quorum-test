@@ -6,7 +6,12 @@ export class VoteResult {
   public voteId: number;
   public voteType: VoteType;
 
-  constructor(id: number, personId: number, voteId: number, voteType: number) {
+  constructor(
+    id: number | undefined,
+    personId: number,
+    voteId: number,
+    voteType: number
+  ) {
     this.id = id || undefined;
     this.personId = personId;
     this.voteId = voteId;
