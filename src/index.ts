@@ -1,4 +1,5 @@
 import * as path from "path";
+import * as fs from "fs";
 import * as CSVWriter from "csv-writer";
 
 import BillService from "./services/bill.service";
@@ -20,11 +21,17 @@ const init = async () => {
     const voteResultService = new VoteResultService();
     await voteResultService.loadVoteResultsFromCSVFile();
 
+    // Create output folder if it doesn't exist to create csv output files
+    if (!fs.existsSync(path.resolve(__dirname, "../output"))) {
+      fs.mkdirSync(path.resolve(__dirname, "../output"));
+    }
+
+    // Get array with support/oppose count list
     const legislatorSupportOppesedCountList =
       personService.getLegislatorSupportOpposeCountList(
         voteResultService.voteResults
       );
-
+    // Write legislators-support-oppose-count.csv file
     await CSVWriter.createObjectCsvWriter({
       path: path.resolve(
         __dirname,
@@ -42,11 +49,13 @@ const init = async () => {
       "legislators-support-oppose-count.csv file has been generated. Check folder /output"
     );
 
+    // Get array with bills supporter/opposer count list
     const supporterOpposerCountList = billService.getSupporterOpposerCountList(
       voteService.votes,
       voteResultService.voteResults,
       personService.persons
     );
+    // Write bills.csv file
     await CSVWriter.createObjectCsvWriter({
       path: path.resolve(__dirname, "../output/bills.csv"),
       header: [
