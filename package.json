@@ -2,9 +2,10 @@
   "name": "quorum-test",
   "version": "1.0.0",
   "description": "",
+  "type": "commonjs",
   "main": "src/index.ts",
   "scripts": {
-    "start": "node src/index.ts",
+    "start": "tsc src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +21,8 @@
   "devDependencies": {
     "@types/node": "^18.15.11",
     "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "csv-parse": "^5.3.8"
   }
 }
