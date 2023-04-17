@@ -38,8 +38,6 @@ export default class PersonService {
 
     this.persons = persons;
 
-    console.info(persons, "Person array has been successfuly loaded");
-
     return persons;
   }
 }

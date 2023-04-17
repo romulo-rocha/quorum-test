@@ -38,8 +38,6 @@ export default class VoteService {
 
     this.votes = votes;
 
-    console.info(votes, "Vote array has been successfuly loaded");
-
     return votes;
   }
 }

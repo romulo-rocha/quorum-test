@@ -39,8 +39,6 @@ export default class BillService {
 
     this.bills = bills;
 
-    console.info(bills, "Bill array has been successfuly loaded");
-
     return bills;
   }
 }

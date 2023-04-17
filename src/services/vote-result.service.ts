@@ -44,8 +44,6 @@ export default class VoteResultService {
 
     this.voteResults = voteResults;
 
-    console.info(voteResults, "VoteResult array has been successfuly loaded");
-
     return voteResults;
   }
 }
