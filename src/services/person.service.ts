@@ -10,7 +10,7 @@ export default class PersonService {
   constructor() {}
 
   async loadPersonsFromCSVFile(): Promise<any[]> {
-    const csvFilePath = path.resolve(__dirname, "../core/data/legislators.csv");
+    const csvFilePath = path.resolve(__dirname, "../../data/legislators.csv");
     const fileContent = fs.readFileSync(csvFilePath, { encoding: "utf-8" });
 
     const columns: string[] = ["id", "name"];
