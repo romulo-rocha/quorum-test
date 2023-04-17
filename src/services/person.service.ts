@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { Person } from "../core/models/Person";
+import Person from "../core/models/Person";
 import { parse } from "csv-parse";
 
 export default class PersonService {
@@ -28,13 +28,17 @@ export default class PersonService {
           // Transforms result array into an array of Person
           // Resolves promise with Person array
           resolve(
-            result.map((person: any) => new Person(person.id, person.name))
+            result.map(
+              (person: any) => new Person(Number(person.id), person.name)
+            )
           );
         }
       );
     });
 
     this.persons = persons;
+
+    console.info(persons, "Person array has been successfuly loaded");
 
     return persons;
   }

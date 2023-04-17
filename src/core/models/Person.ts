@@ -1,4 +1,4 @@
-export class Person {
+export default class Person {
   public id?: number;
   public name: string;
 

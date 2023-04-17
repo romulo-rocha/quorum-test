@@ -1,6 +1,6 @@
 import { VoteType } from "../enums/VoteType";
 
-export class VoteResult {
+export default class VoteResult {
   public id?: number;
   public personId: number;
   public voteId: number;
