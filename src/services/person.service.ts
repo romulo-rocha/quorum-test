@@ -1,13 +1,35 @@
 import * as fs from "fs";
 import * as path from "path";
+import { parse } from "csv-parse";
 
 import Person from "../core/models/Person";
-import { parse } from "csv-parse";
+import VoteResult from "../core/models/VoteResult";
+
+interface LegislatorSupportOpposeCount {
+  id: number;
+  name: string;
+  numSupportedBills: number;
+  numOpposedBills: number;
+}
 
 export default class PersonService {
   persons: Person[] = [];
 
   constructor() {}
+
+  getLegislatorSupportOpposeCountList(
+    voteResults: VoteResult[]
+  ): LegislatorSupportOpposeCount[] {
+    return this.persons.map(
+      (person) =>
+        <LegislatorSupportOpposeCount>{
+          id: person.id,
+          name: person.name,
+          numSupportedBills: person.getNumSupportedBills(voteResults),
+          numOpposedBills: person.getNumOpposedBills(voteResults),
+        }
+    );
+  }
 
   async loadPersonsFromCSVFile(): Promise<any[]> {
     const csvFilePath = path.resolve(__dirname, "../../data/legislators.csv");

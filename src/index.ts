@@ -17,6 +17,12 @@ const init = async () => {
 
     const voteResultService = new VoteResultService();
     await voteResultService.loadVoteResultsFromCSVFile();
+
+    const legislatorSupportOppesedCountList =
+      personService.getLegislatorSupportOpposeCountList(
+        voteResultService.voteResults
+      );
+    console.log(legislatorSupportOppesedCountList);
   } catch (err) {
     console.error("Error during execution of process", err);
   } finally {
